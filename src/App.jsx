@@ -3,9 +3,19 @@ import './App.css'
 import ImageManipulation from './component/ImageManipulation'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
+import Registration from './pages/Registration'
+import Dashboard from './pages/Dashboard'
+import MainLayout from './pages/MainLayout'
 
-function App() {
-  const [count, setCount] = useState(0)
+//how to pass data from child to parent component
+
+function App({regData}) {
+  const [data, setData] = useState({});
+
+  const setDataFromChild = (childData) => {
+    setData(childData);
+    console.log(childData);
+  }
 
   return (
     <>
@@ -13,9 +23,18 @@ function App() {
 
      <BrowserRouter>
       <Routes>
+        <Route path='/' element={<MainLayout/>}/>
         <Route path='/login' element={<Login/>}></Route>
+        <Route path='/registration' element={<Registration regData={regData} setRegData={setDataFromChild}/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
      </BrowserRouter>
+
+     <h2>
+    {
+      JSON.stringify(data)
+    }
+     </h2>
     </>
   )
 }
